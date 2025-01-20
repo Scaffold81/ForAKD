@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{943D3326-2E70-B4A0-5259-6923EF878F33}</ProjectGuid>
+    <ProjectGuid>{8487EF77-2DCC-5F43-F3D5-487277E39DB4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -60,6 +60,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Player\PlayerInstaller.cs" />
     <Compile Include="Assets\Scripts\Player\Interactor.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerView.cs" />
     <Compile Include="Assets\Scripts\Common\CursorHandler.cs" />
@@ -335,6 +336,10 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Zenject-usage">
+      <HintPath>Assets\Plugins\Zenject\Source\Usage\Zenject-usage.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
@@ -827,37 +832,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Zenject.Player.csproj">
+      <Project>{0B05016D-B212-321D-55F9-418C590BB5A7}</Project>
+      <Name>Zenject.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Core.Player.csproj">
+      <Project>{3F4012AE-E8CF-4B69-FCF3-F106640AB3A5}</Project>
+      <Name>Unity.VisualScripting.Core.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{34933A94-4BCC-5168-7C60-1DC5D6169197}</Project>
+      <Name>UnityEngine.UI.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
+      <Project>{8F62B669-70BE-DD4A-9A60-F05979569CBB}</Project>
+      <Name>Unity.VisualScripting.Flow.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Player.csproj">
-      <Project>{DA97291E-B688-C7DA-910B-7D91DADD65D8}</Project>
+      <Project>{FCD50F67-1B78-8C3D-0669-FD48E42BB842}</Project>
       <Name>Unity.Timeline.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.Player.csproj">
-      <Project>{83E70D11-C4EB-0606-00FE-352F337BF3AC}</Project>
+      <Project>{80AD60EB-3B22-6877-CAA0-7F5BB6EB0076}</Project>
       <Name>Unity.InputSystem.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.ForUI.Player.csproj">
-      <Project>{70EBB019-F5E9-14FD-7213-CE31751F55FD}</Project>
+      <Project>{5A831F7F-EB4E-79E9-768F-ABF90AA220FF}</Project>
       <Name>Unity.InputSystem.ForUI.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.Player.csproj">
-      <Project>{A267063C-5A56-9BCB-7E2B-7653111803EA}</Project>
-      <Name>UnityEngine.UI.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
-      <Project>{495AA4E2-A420-99E2-DB8C-092C70AE30D1}</Project>
+      <Project>{6271B1EE-069C-C13D-0CF3-1360331BBCBE}</Project>
       <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Core.Player.csproj">
-      <Project>{B1A7D790-BC7D-3426-696E-0AB763EA755A}</Project>
-      <Name>Unity.VisualScripting.Core.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
-      <Project>{A9BCFAE3-9890-66AC-740D-1134567BACBA}</Project>
+      <Project>{C49240CE-B1B0-E676-7A99-C9DEA0C185C7}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
-      <Project>{32F9525E-8E37-0C59-C0BD-FCA597EC8BD1}</Project>
-      <Name>Unity.VisualScripting.Flow.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

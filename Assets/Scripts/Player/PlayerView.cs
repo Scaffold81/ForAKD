@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Core.Player
 {
     public class PlayerView : MonoBehaviour
     {
+        [Inject]
+        private CharacterController _characterController;
+
         [SerializeField]
         private GameObject _body;
         [SerializeField]
@@ -19,13 +23,6 @@ namespace Core.Player
 
         private Vector2 _lookInput;
         private float _direction;
-
-        private CharacterController _characterController;
-       
-        private void Awake()
-        {
-            _characterController = GetComponent<CharacterController>();
-        }
 
         private void Update()
         {
