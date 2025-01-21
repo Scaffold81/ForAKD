@@ -1,3 +1,4 @@
+using Core.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -8,6 +9,10 @@ namespace Core.Player
     {
         [Inject]
         private CharacterController _characterController;
+        [Inject]
+        private JoystickControllerMove _movementJoystick; // Джойстик для движения вперед/назад
+        [Inject]
+        private JoystickControllerRotate _rotationJoystick; // Новый джойстик для поворота влево/вправо
 
         [SerializeField]
         private GameObject _body;
@@ -26,29 +31,24 @@ namespace Core.Player
 
         private void Update()
         {
-            LookAndRotate();
-            Move();
+            MoveWithJoystick();
+            RotateWithJoystick();
         }
 
-        private void Move()
+        private void MoveWithJoystick()
         {
+            var inputDirection = _movementJoystick.GetInputDirection();
+            _direction = inputDirection.z; // Используйте ось Z для движения вперед/назад, если это соответствует вашему джойстику
             _characterController.Move(_body.transform.forward * _direction * _speed * Time.deltaTime);
         }
 
-        private void LookAndRotate()
+        private void RotateWithJoystick()
         {
-            var lookDelta = Mouse.current.delta.ReadValue();
-
+            var rotationInput = _rotationJoystick.GetInputDirection();
             // Поворот тела по горизонтали
-            _body.transform.Rotate(new Vector3(0, lookDelta.x * _bodyRotationSpeed * Time.deltaTime, 0));
-
-            //поворот камеры по вертикали
-            _head.transform.Rotate(new Vector3(-lookDelta.y * _headRotationSpeed * Time.deltaTime, 0, 0));
-        }
-
-        public void MoveInput(InputAction.CallbackContext context)
-        {
-            _direction = context.ReadValue<Vector2>().y;
+            _body.transform.Rotate(new Vector3(0, rotationInput.x * _bodyRotationSpeed * Time.deltaTime, 0));
+            // Поворот головы по вертикали
+            _head.transform.Rotate(new Vector3(-rotationInput.y * _headRotationSpeed * Time.deltaTime, 0,  0));
         }
     }
 }

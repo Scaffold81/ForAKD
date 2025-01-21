@@ -1,60 +1,50 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Core.Player
 {
     public class Interactor : MonoBehaviour
     {
-        private string pickedObjectTag="Item";
+        private string _pickedObjectTag = "Item";
         [SerializeField]
         private Transform _originalParent;
 
-        private GameObject _pickedObject;
-        
-        public void OnMouseClick(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                if (_pickedObject == null)
-                    PickObject();
-            }
-            else if (context.canceled)
-            {
-                
-                if (_pickedObject != null)
-                    ReleaseObject();
-            }
-        }
+        private Rigidbody _pickedObject;
 
-        public void PickObject()
+        private void Update()
         {
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward * 5f);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began)
             {
-                if (hit.collider != null && hit.collider.tag == pickedObjectTag)
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    _pickedObject = hit.collider.gameObject;
-                    _originalParent = _pickedObject.transform.parent;
-                    _pickedObject.transform.parent = Camera.main.transform;
-                    var rb = _pickedObject.GetComponent<Rigidbody>();
-                    rb.useGravity = false;
-                    rb.velocity =  Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
+                    if (hit.collider != null && hit.collider.tag == _pickedObjectTag)
+                    {
+                        if (_pickedObject != null)
+                            ReleaseObject();
+                        else
+                            PickObject(hit.collider);
+                    }
                 }
             }
         }
 
+        public void PickObject(Collider hit)
+        {
+            _pickedObject = hit.GetComponent<Rigidbody>();
+            _pickedObject.transform.parent = _originalParent;
+            _pickedObject.isKinematic = true;
+            _pickedObject.velocity = Vector3.zero;
+            _pickedObject.angularVelocity = Vector3.zero;
+
+        }
+
         public void ReleaseObject()
         {
-            if (_pickedObject != null)
-            {
-                _pickedObject.transform.parent = _originalParent;
-                _pickedObject.GetComponent<Rigidbody>().useGravity = true;
-                _pickedObject = null;
-                _originalParent = null;
-            }
+            _pickedObject.transform.parent = null;
+            _pickedObject.isKinematic= false;
+            _pickedObject = null;
         }
     }
 }
